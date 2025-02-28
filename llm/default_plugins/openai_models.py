@@ -522,6 +522,13 @@ class _Shared:
             kwargs["http_client"] = logging_client()
         if async_:
             return openai.AsyncOpenAI(**kwargs)
+        elif self.api_type == 'azure':
+            return openai.AzureOpenAI(
+                azure_endpoint=self.api_base,
+                azure_deployment=self.model_name,
+                api_version=self.api_version,
+                api_key=kwargs.get("api_key"),
+                )
         else:
             return openai.OpenAI(**kwargs)
 
